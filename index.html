@@ -12,10 +12,14 @@
       h1{background-color: rgba(0,0,255,0.3);padding: 5px; padding-left: 10px;color:white}
       label {font-style: oblique;background-color: rgba(255, 255, 0,0.4);padding-left: 20px;padding-right: 20px;border-radius: 5px;}
       button{background-color:rgba(61, 148, 0 , 0.70);color:white;font-weight:bold;border-radius:5px;border-style: groove;border-color: rgba(61,178,0,0.5);padding-left: 10px;padding-right: 10px;height: 40px;cursor:pointer;}
-      @media screen and (min-width: 767px){
+      .imgView{width:80%;object-fit: cover;margin-left:10%;border-style: ridge;border-color: rgba(61, 148, 0 , 0.70);}
+      @media screen and (max-width: 767px){
          h1{font-size:xxx-large;}
-         label{font-size:x-large;}
-         button{height:auto;font-size:xx-large;}
+         label{display: block;margin-left: 10%;font-size: small;width: 80%;padding: unset;margin-bottom: -1%;}
+         button{height:auto;font-size:xx-large;width:80%;margin-left:10%;margin-top:2%;}
+         .resize-option{display:block;margin-left:10%;}
+         .button-normal{}
+         .button-small{height:auto;font-size:small;width:40%;margin-left:20%;}
       }
     </style>
   </head>
@@ -24,19 +28,24 @@
     <div id='file'>
       <input name='file' id='upload-file' type='file'class='hidden' accept='image/png,image/jpeg' onchange='return preview(event,0)'/><p>
       <button onclick='return clickFile()'>Choose a photo from your device</button><p>
-      <img id='img'>
     </div>
+    <div id='images' class='hidden'>
+      <img id='img' class='hidden'>
+      <img id='img2' class='imgView'>
+    </div>
+    <canvas id="canvas" height='0px' class='hidden'></canvas><br>
     <div id='resize' class='hidden'>
-      <canvas id="canvas" height='0px' ></canvas><br>
-      <label id='label'class='hidden'></label><p>
-      Resize <select id='resize-mode' onchange='return spanText(this)'><option value='percentage'>Percentage</option><option value='width'>Width</option><option value='height'>Height</option><option value='whatsapp'>Whatsapp DP</option></select> 
-      <span id='span-pc'> to:<input type='number' id='percentage' style='width:50px' value='50'/></span>
-      <span id='span-pc-suffix'>%</span>
-      <button onclick='return doReduction()'>Resize</button>
-      <button onclick='return reset()'>Choose another photo</button>
+      <span class='resize-option'>
+        Resize <select id='resize-mode' onchange='return spanText(this)'><option value='percentage'>Percentage</option><option value='width'>Width</option><option value='height'>Height</option><option value='whatsapp'>Whatsapp DP</option></select> 
+        <span id='span-pc'> to:<input type='number' id='percentage' style='width:50px' value='50'/></span>
+        <span id='span-pc-suffix'>%</span>
+      </span>
+      <button id='resizeButton' onclick='return doReduction()'>Resize</button>
+      <button id='capButton' onclick='return reset()'>Choose another photo</button>
     </div>
     <div id='save' class='hidden'>
-    <button onclick='return download()'>Download resized photo</button>
+      <p><label id='label'class='hidden'></label>
+      <button onclick='return download()'>Download resized photo</button>
     </div>
   </body>
   
@@ -48,7 +57,13 @@
       var url=URL.createObjectURL(event.target.files[0]);
       var outputImg = getE('img');  
       outputImg.src=url;
+      var viewImg = getE('img2');  
+      viewImg.src=url;
+      getE('file').setAttribute('class','hidden');
+      getE('images').setAttribute('class','visible');
       getE('resize').setAttribute('class','visible');
+      getE('resizeButton').setAttribute('class','button-normal');
+      getE('capButton').setAttribute('class','button-normal');
     }
     
     function getE(ele){
@@ -83,6 +98,8 @@
       var txt='Resized (W X H) from '+img.width+'px X '+img.height+'px to '+canvas.width+'px X'+canvas.height+'px';
       getE('label').innerHTML=txt;
       getE('label').setAttribute('class','visible');
+      getE('resizeButton').setAttribute('class','button-small');
+      getE('capButton').setAttribute('class','button-small');
     }
     
     function download() {
@@ -100,6 +117,8 @@
       getE('upload-file').value='';
       getE('canvas').setAttribute('height','0px');
       getE('img').setAttribute('src','');
+      getE('img2').setAttribute('src','');
+      getE('images').setAttribute('class','hidden');
       show('file');
     }
     function show(id){

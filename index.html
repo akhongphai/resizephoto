@@ -41,10 +41,10 @@
         <span id='span-pc-suffix'>%</span>
       </span>
       <button id='resizeButton' onclick='return doReduction()'>Resize</button>
-      <button id='capButton' onclick='return reset()'>Choose another photo</button>
+      <button id='capButton' onclick='return clickFile()'>Choose another photo</button>
     </div>
     <div id='save' class='hidden'>
-      <p><label id='label'class='hidden'></label>
+      <p><label id='label'></label>
       <button onclick='return download()'>Download resized photo</button>
     </div>
   </body>
@@ -62,6 +62,7 @@
       getE('file').setAttribute('class','hidden');
       getE('images').setAttribute('class','visible');
       getE('resize').setAttribute('class','visible');
+      getE('save').setAttribute('class','hidden');
       getE('resizeButton').setAttribute('class','button-normal');
       getE('capButton').setAttribute('class','button-normal');
     }
@@ -97,7 +98,6 @@
       getE('save').setAttribute('class','visible');
       var txt='Resized (W X H) from '+img.width+'px X '+img.height+'px to '+canvas.width+'px X'+canvas.height+'px';
       getE('label').innerHTML=txt;
-      getE('label').setAttribute('class','visible');
       getE('resizeButton').setAttribute('class','button-small');
       getE('capButton').setAttribute('class','button-small');
     }
@@ -111,23 +111,11 @@
      a.download = 'myImage.png';
      document.body.appendChild(a);
      a.click();
-    }
-    
-    function reset(){
-      getE('upload-file').value='';
-      getE('canvas').setAttribute('height','0px');
-      getE('img').setAttribute('src','');
-      getE('img2').setAttribute('src','');
-      getE('images').setAttribute('class','hidden');
-      show('file');
-    }
-    function show(id){
-      getE('file').setAttribute('class','hidden');
-      getE('resize').setAttribute('class','hidden');
-      getE('label').setAttribute('class','hidden');
+      getE('resizeButton').setAttribute('class','button-normal');
+      getE('capButton').setAttribute('class','button-normal');
       getE('save').setAttribute('class','hidden');
-      getE(id).setAttribute('class','visible');
     }
+
   </script>
 </html>
 

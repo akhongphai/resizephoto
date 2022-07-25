@@ -6,6 +6,15 @@
     <meta name='description' content='Superfast, unlimited free photo resizer. No registration, no cookies.Privacy assured - we do not store your photos in our server.'/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="image/favicon1.png" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZDWBBNNMRM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZDWBBNNMRM');
+    </script>
+    <style id="antiClickjack">body{display:none !important;}</style>
     <style>
       .hidden{display:none;}
       body{font-family:Arial,Helvetica,sans-serif;}
@@ -25,6 +34,7 @@
   </head>
   <body>
     <h1>Resize Photo</h1><p>
+    <noscript>Please enable javascript</noscript>
     <div id='file'>
       <input name='file' id='upload-file' type='file'class='hidden' accept='image/png,image/jpeg' onchange='return preview(event,0)'/><p>
       <button onclick='return clickFile()'>Choose a photo from your device</button><p>
@@ -49,6 +59,7 @@
     </div>
   </body>
   
+  <script type="text/javascript"> if (self === top) { var antiClickjack = document.getElementById("antiClickjack"); antiClickjack.parentNode.removeChild(antiClickjack); } else { top.location = self.location; } </script>
   <script>
     function clickFile(){
       getE('upload-file').click();

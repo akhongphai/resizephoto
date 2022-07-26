@@ -18,7 +18,8 @@
     <style>
       .hidden{display:none;}
       body{font-family:Arial,Helvetica,sans-serif;}
-      h1{background-color: rgba(0,0,255,0.3);padding: 5px; padding-left: 10px;color:white}
+      /*h1{background-color: rgba(0,0,255,0.3);padding: 5px; padding-left: 10px;color:white}*/
+      h1{background-color: rgba(0,188,212,1);padding: 5px; padding-left: 10px;color:white}
       label {font-style: oblique;background-color: rgba(255, 255, 0,0.4);padding-left: 20px;padding-right: 20px;border-radius: 5px;}
       button{background-color:rgba(61, 148, 0 , 0.70);color:white;font-weight:bold;border-radius:5px;border-style: groove;border-color: rgba(61,178,0,0.5);padding-left: 10px;padding-right: 10px;height: 40px;cursor:pointer;}
       .imgView{width:80%;object-fit: cover;margin-left:10%;border-style: ridge;border-color: rgba(61, 148, 0 , 0.70);}
@@ -30,14 +31,14 @@
          .button-normal{}
          .button-small{height:auto;font-size:small;width:40%;margin-left:20%;}
       }
+    <noscript><h1>Please enable javascript</h1></noscript>
     </style>
   </head>
   <body>
     <h1>Resize Photo</h1><p>
-    <noscript>Please enable javascript</noscript>
     <div id='file'>
       <input name='file' id='upload-file' type='file'class='hidden' accept='image/png,image/jpeg' onchange='return preview(event,0)'/><p>
-      <button onclick='return clickFile()'>Choose a photo from your device</button><p>
+      <button id='btnChoose' onclick='return clickFile()'>Choose photo</button><p>
     </div>
     <div id='images' class='hidden'>
       <img id='img' class='hidden'>
@@ -50,12 +51,11 @@
         <span id='span-pc'> to:<input type='number' id='percentage' style='width:50px' value='50'/></span>
         <span id='span-pc-suffix'>%</span>
       </span>
-      <button id='resizeButton' onclick='return doReduction()'>Resize</button>
-      <button id='capButton' onclick='return clickFile()'>Choose another photo</button>
+      <button id='btnResize' onclick='return doReduction()'>Resize</button>
     </div>
     <div id='save' class='hidden'>
       <p><label id='label'></label>
-      <button onclick='return download()'>Download resized photo</button>
+      <button id='btnDownload' onclick='return download()'>Download</button>
     </div>
   </body>
   
@@ -70,12 +70,11 @@
       outputImg.src=url;
       var viewImg = getE('img2');  
       viewImg.src=url;
-      getE('file').setAttribute('class','hidden');
+      getE('btnChoose').innerHTML='Change Photo';
       getE('images').setAttribute('class','visible');
       getE('resize').setAttribute('class','visible');
       getE('save').setAttribute('class','hidden');
-      getE('resizeButton').setAttribute('class','button-normal');
-      getE('capButton').setAttribute('class','button-normal');
+      getE('btnResize').setAttribute('class','button-normal');
     }
     
     function getE(ele){
@@ -105,12 +104,11 @@
       canvas.width=img.width*pc/100;
       canvas.height=img.height*pc/100;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      getE('file').setAttribute('class','hidden');
+      getE('btnChoose').innerHTML='Next Photo';
       getE('save').setAttribute('class','visible');
       var txt='Resized (W X H) from '+img.width+'px X '+img.height+'px to '+canvas.width+'px X'+canvas.height+'px';
       getE('label').innerHTML=txt;
-      getE('resizeButton').setAttribute('class','button-small');
-      getE('capButton').setAttribute('class','button-small');
+      getE('btnResize').setAttribute('class','button-small');
     }
     
     function download() {
@@ -122,8 +120,7 @@
      a.download = 'myImage.png';
      document.body.appendChild(a);
      a.click();
-      getE('resizeButton').setAttribute('class','button-normal');
-      getE('capButton').setAttribute('class','button-normal');
+      getE('btnResize').setAttribute('class','button-normal');
       getE('save').setAttribute('class','hidden');
     }
 
